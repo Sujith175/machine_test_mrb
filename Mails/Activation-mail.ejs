@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mr.Biller Machine Test</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      max-width: 100%;
+      font-family: Arial, sans-serif;
+      font-size: 16px;
+      line-height: 1.5;
+      background-color: #fafafa;
+      color: #222222;
+    }
+
+    a {
+      color: #000;
+      text-decoration: none;
+    }
+
+    h1 {
+      font-size: 24px;
+      font-weight: 700;
+      line-height: 1.25;
+      margin-top: 0;
+      margin-bottom: 15px;
+      text-align: center;
+    }
+
+    p {
+      margin-top: 0;
+      margin-bottom: 24px;
+    }
+
+    table td {
+      vertical-align: top;
+    }
+
+    .email-wrapper {
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .email-header {
+      background-color: #0442a0;
+      padding: 24px;
+      color: #ffffff;
+      text-align: center;
+    }
+
+    .email-body {
+      padding: 24px;
+      background-color: #ffffff;
+    }
+
+    .email-footer {
+      background-color: #f6f6f6;
+      padding: 24px;
+    }
+
+    .button {
+      display: inline-block;
+      background-color: #032e8b;
+      color: #ffffff;
+      font-size: 16px;
+      font-weight: 700;
+      text-align: center;
+      text-decoration: none;
+      padding: 12px 24px;
+      border-radius: 4px;
+    }
+
+    .logo {
+      max-width: 150px;
+      margin-bottom: 10px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="email-wrapper">
+    <div class="email-header">
+      <img src="https://drive.google.com/file/d/14uQUK0Xn8-cD8BZaV8gTMmCKWOUmhLi-/view?usp=drive_link"
+        alt="MR.Biller logo" class="logo" />
+      <h1>Welcome to Your Machine Test!</h1>
+    </div>
+    <div class="email-body">
+      <p>Hello <%= user.name %>,</p>
+      <p>
+        Congratulations on making it to this stage! You've come a long way —
+        your dedication and learning journey have brought you here.
+      </p>
+      <p>
+        You are now just one step away from proving your skills. To begin your
+        machine test, please use the following activation code:
+      </p>
+      <h2>
+        <%= activationCode %>
+      </h2>
+      <p>
+        Enter this code for activating the user
+        <strong>5 minutes</strong> to get started.
+      </p>
+      <p>
+        Give it your best — stay confident, stay focused, and show us what you
+        can do. We’re rooting for you!
+      </p>
+    </div>
+    <div class="email-footer">
+      <p>
+        If you have any questions, feel free to
+        <a href="">ASK</a>.
+      </p>
+      <p>Best of luck,<br />MR.Biller Talent acquisition team</p>
+    </div>
+  </div>
+</body>
+
+</html>
