@@ -17,8 +17,8 @@ app.use(cookieParser());
 //cors origin
 
 const allowedOrigins = [
-  "http://localhost:3000", // your local React app
-  "https://machine-test-lgix.onrender.com", // replace with your actual deployed frontend URL
+  "http://localhost:3000",
+  "https://machine-test-lgix.onrender.com",
 ];
 
 app.use(
@@ -27,14 +27,23 @@ app.use(
       if (!origin || allowedOrigins.includes(origin)) {
         callback(null, true);
       } else {
-        console.log("CORS Blocked Origin:", origin);
+        console.log(" Blocked CORS Origin:", origin);
         callback(new Error("Not allowed by CORS"));
       }
     },
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     credentials: true,
   })
 );
 
+// Preflight requests
+app.options(
+  "*",
+  cors({
+    origin: allowedOrigins,
+    credentials: true,
+  })
+);
 //test api
 
 app.use("/api/v1/user", userRouter);

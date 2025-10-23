@@ -10,7 +10,7 @@ const isAuthenticated = catchAsyncError(async (req, res, next) => {
   if (!access_token) {
     return next(new ErrorHandler("please login to continue", 400));
   }
-  
+
   const decoded = jwt.verify(access_token, process.env.ACCESS_TOKEN);
 
   if (!decoded) {
