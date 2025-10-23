@@ -18,7 +18,8 @@ app.use(cookieParser());
 
 app.use(
   cors({
-    origin: process.env.ORIGIN,
+    origin: "https://auth-mrb.onrender.com",
+    credentials: true,
   })
 );
 
