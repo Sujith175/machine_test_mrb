@@ -17,8 +17,9 @@ app.use(cookieParser());
 //cors origin
 
 const allowedOrigins = [
-  "http://localhost:3000",
+  "http://localhost:5173",
   "https://machine-test-lgix.onrender.com",
+  "http://localhost:5174",
 ];
 
 app.use(
