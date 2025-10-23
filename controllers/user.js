@@ -111,7 +111,6 @@ const loginUser = catchAsyncError(async (req, res, next) => {
       return next(new ErrorHandler("Invalid Credentials", 400));
     }
     const user = await UserModel.findOne({ email }).select("+password");
-    console.log(user._id);
 
     if (!user) {
       return next(new ErrorHandler("Invalid Credentials", 400));
