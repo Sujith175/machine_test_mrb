@@ -16,6 +16,11 @@ app.use(cookieParser());
 
 //cors origin
 
+const allowedOrigins = [
+  "http://localhost:3000", // your local React app
+  "https://machine-test-lgix.onrender.com", // replace with your actual deployed frontend URL
+];
+
 app.use(
   cors({
     origin: "https://auth-mrb.onrender.com",
