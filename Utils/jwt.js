@@ -1,41 +1,50 @@
 require("dotenv").config();
+
 const redisClient = require("./Redis");
 
 const accessTokenExpire = parseInt(
-  process.env.ACCESS_TOKEN_EXPIRES || "5", // in minutes
+  process.env.ACCESS_TOKEN_EXPIRES || "300",
   10
 );
 
 const refreshTokenExpire = parseInt(
-  process.env.REFRESH_TOKEN_EXPIRES || "3", // in days
+  process.env.REFRESH_TOKEN_EXPIRES || "1200",
   10
 );
 
-// ✅ Set correct cookie options for cross-domain (Render + React app)
+// Set cookies with appropriate options
 const accessTokenOptions = {
-  expires: new Date(Date.now() + accessTokenExpire * 60 * 1000), // 5 minutes default
-  maxAge: accessTokenExpire * 60 * 1000,
+  expires: new Date(Date.now() + accessTokenExpire * 60 * 60 * 1000),
+  maxAge: accessTokenExpire * 60 * 60 * 1000,
   httpOnly: true,
-  sameSite: "none", // ✅ Must be 'none' for cross-site cookies
-  secure: true, // ✅ Render uses HTTPS → must be true
+  sameSite: "lax",
 };
-
 const refreshTokenOptions = {
   expires: new Date(Date.now() + refreshTokenExpire * 24 * 60 * 60 * 1000),
   maxAge: refreshTokenExpire * 24 * 60 * 60 * 1000,
   httpOnly: true,
-  sameSite: "none", // ✅ Required for cross-site cookies
-  secure: true,
+  sameSite: "lax",
+};
+//exporting two token options
+
+module.exports = {
+  accessTokenOptions,
+  refreshTokenOptions,
 };
 
-// ✅ Send tokens as secure cookies and store session in Redis
-const sendToken = async (user, statusCode, res) => {
+const sendToken = (user, statusCode, res) => {
   try {
     const accessToken = user.signAccessToken();
     const refreshToken = user.signRefreshToken();
 
-    // Store user session in Redis (optional for refresh)
-    await redisClient.set(user._id.toString(), JSON.stringify(user));
+    // Store the user session in Redis
+    redisClient.set(user._id.toString(), JSON.stringify(user));
+
+    // Secure cookies in production
+    if (process.env.NODE_ENV === "production") {
+      accessTokenOptions.secure = true;
+      refreshTokenOptions.secure = true;
+    }
 
     // Set cookies
     res.cookie("access_token", accessToken, accessTokenOptions);
@@ -48,16 +57,10 @@ const sendToken = async (user, statusCode, res) => {
       accessToken,
     });
   } catch (error) {
-    console.error("Error in sendToken:", error.message);
-    res.status(500).json({
-      success: false,
-      message: "Error while sending token",
-    });
+    console.error(error);
   }
 };
 
 module.exports = {
   sendToken,
-  accessTokenOptions,
-  refreshTokenOptions,
 };
